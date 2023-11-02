@@ -3,9 +3,13 @@ FROM ghcr.io/actions/actions-runner:latest
 USER root
 
 # install curl and jq
-RUN apt-get update && apt-get install -y curl jq unzip ansible && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl jq unzip gcc python-dev libkrb5-dev python3-pip && \
+  pip3 install --upgrade pip && \
+  pip3 install --upgrade virtualenv && \
+  pip3 install pywinrm && \
+  pip3 install ansible && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
